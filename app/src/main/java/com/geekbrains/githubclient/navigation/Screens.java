@@ -1,5 +1,7 @@
 package com.geekbrains.githubclient.navigation;
 
+import android.os.Parcelable;
+
 import androidx.fragment.app.Fragment;
 
 import com.geekbrains.githubclient.ui.fragment.UserInfoFragment;
@@ -16,17 +18,15 @@ public class Screens {
     }
 
     public static class UserInfoScreen extends SupportAppScreen {
-        private String userLogin;
+        private Parcelable gitUser;
 
-        public UserInfoScreen(String text){
-            this.userLogin = text;
+        public UserInfoScreen(Parcelable user){
+            this.gitUser = user;
         }
 
         @Override
         public Fragment getFragment() {
-            UserInfoFragment userInfoFrag = new UserInfoFragment();
-            userInfoFrag.setLogin(userLogin);
-            return userInfoFrag;
+            return UserInfoFragment.newInstance(gitUser);
         }
     }
 

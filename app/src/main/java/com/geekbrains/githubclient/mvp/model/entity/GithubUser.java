@@ -1,11 +1,30 @@
 package com.geekbrains.githubclient.mvp.model.entity;
 
-public class GithubUser {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class GithubUser implements Parcelable {
     private String mLogin;
 
     public GithubUser(String login) {
         mLogin = login;
     }
+
+    protected GithubUser(Parcel in) {
+        mLogin = in.readString();
+    }
+
+    public static final Creator<GithubUser> CREATOR = new Creator<GithubUser>() {
+        @Override
+        public GithubUser createFromParcel(Parcel in) {
+            return new GithubUser(in);
+        }
+
+        @Override
+        public GithubUser[] newArray(int size) {
+            return new GithubUser[size];
+        }
+    };
 
     public String getLogin() {
         return mLogin;
@@ -13,5 +32,15 @@ public class GithubUser {
 
     public void setLogin(String login) {
         mLogin = login;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(mLogin);
     }
 }

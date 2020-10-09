@@ -1,13 +1,17 @@
 package com.geekbrains.githubclient.ui.fragment;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.geekbrains.githubclient.GithubApplication;
 import com.geekbrains.githubclient.R;
+import com.geekbrains.githubclient.mvp.model.entity.GithubUser;
 import com.geekbrains.githubclient.mvp.presenter.UserInfoPresenter;
 import com.geekbrains.githubclient.mvp.view.UserInfoView;
 import com.geekbrains.githubclient.ui.BackButtonListener;
@@ -18,10 +22,26 @@ public class UserInfoFragment extends MvpAppCompatFragment implements UserInfoVi
 
     private TextView loginTV;
     private View mView;
-    private String userLogin;
+    private GithubUser gitUser;
 
     @InjectPresenter
     UserInfoPresenter mPresenter;
+
+    public static UserInfoFragment newInstance(Parcelable gitUser) {
+        UserInfoFragment myFragment = new UserInfoFragment();
+
+        Bundle args = new Bundle();
+        args.putParcelable("user", gitUser);
+        myFragment.setArguments(args);
+
+        return myFragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        gitUser = getArguments().getParcelable("user");
+    }
 
     @Nullable
     @Override
@@ -39,7 +59,7 @@ public class UserInfoFragment extends MvpAppCompatFragment implements UserInfoVi
     @Override
     public void init() {
         loginTV = mView.findViewById(R.id.tv_user_login_info);
-        loginTV.setText(userLogin);
+        loginTV.setText(gitUser.getLogin());
     }
 
     @Override
@@ -47,7 +67,4 @@ public class UserInfoFragment extends MvpAppCompatFragment implements UserInfoVi
         return mPresenter.backPressed();
     }
 
-    public void setLogin(String text){
-        userLogin = text;
-    }
 }
