@@ -4,19 +4,69 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <ImageView
+        android:id="@+id/iv_avatar_user_info"
+        android:layout_width="@dimen/avatar_size"
+        android:layout_height="@dimen/avatar_size"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/user_avatar_discr"
+        android:layout_marginStart="@dimen/margins"
+        android:layout_marginTop="@dimen/margins"
+        android:background="@color/colorPrimary"/>
+
     <TextView
         android:id="@+id/tv_user_login_info"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/iv_avatar_user_info"
+        app:layout_constraintBottom_toBottomOf="@id/iv_avatar_user_info"
         android:paddingStart="@dimen/left_right_padding"
         android:paddingEnd="@dimen/left_right_padding"
-        android:textAlignment="center"
+        android:textAlignment="textStart"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
         android:textSize="@dimen/user_login_txt_size"
         android:text="@string/default_text"
         />
+
+    <TextView
+        android:id="@+id/tv_repos_list_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/iv_avatar_user_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_avatar_user_info"
+        android:layout_marginEnd="@dimen/margins"
+        android:layout_marginStart="@dimen/margins"
+        android:layout_marginTop="@dimen/margins"
+        android:textColor="@color/colorPrimaryDark"
+        android:textAlignment="textStart"
+        android:textSize="@dimen/titles"
+        android:text="@string/list_of_repos"
+        android:textAllCaps="true"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toStartOf="@id/iv_avatar_user_info"
+        app:layout_constraintTop_toBottomOf="@id/tv_repos_list_title"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/margins"
+        android:layout_marginStart="@dimen/margins"
+        android:layout_marginEnd="@dimen/margins">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_repos"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="16dp"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp"
+            />
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

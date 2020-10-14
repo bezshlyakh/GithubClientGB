@@ -8,16 +8,9 @@
     android:gravity="center_vertical"
     tools:ignore="UseCompoundDrawables">
 
-    <ImageView
-        android:id="@+id/iv_avatar"
-        android:layout_width="@dimen/small_avatar_size"
-        android:layout_height="@dimen/small_avatar_size"
-        android:layout_margin="@dimen/margins"
-        android:contentDescription="@string/user_avatar_discr" />
-
     <TextView
-        android:id="@+id/tv_login"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_repo_name"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margins"/>
 

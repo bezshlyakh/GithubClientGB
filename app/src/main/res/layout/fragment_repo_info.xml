@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/margins"
+        android:layout_marginStart="@dimen/margins"
+        android:layout_marginEnd="@dimen/margins"
+        android:layout_marginBottom="@dimen/margins"
+        android:background="@color/light_grey_transp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_repo_full_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:paddingStart="@dimen/left_right_padding"
+                android:paddingEnd="@dimen/left_right_padding"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:textSize="@dimen/user_login_txt_size"
+                android:text="@string/default_text"
+                />
+
+            <TextView
+                android:id="@+id/tv_repo_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_repo_full_name"
+                android:layout_marginTop="@dimen/margins"
+                android:layout_marginStart="@dimen/margins"
+                android:paddingStart="@dimen/left_right_padding"
+                android:paddingEnd="@dimen/left_right_padding"
+                android:textAlignment="textStart"
+                android:textColor="@color/dark_grey"
+                android:textSize="@dimen/simple_text_size"
+                android:text="@string/default_text"
+                />
+
+            <ImageView
+                android:id="@+id/iv_star_forks"
+                android:layout_width="@dimen/small_icon_size"
+                android:layout_height="@dimen/small_icon_size"
+                app:srcCompat="@android:drawable/btn_star_big_on"
+                app:layout_constraintStart_toStartOf="@id/tv_repo_full_name"
+                app:layout_constraintTop_toBottomOf="@id/tv_repo_description"
+                android:layout_marginTop="@dimen/margins"
+                android:layout_marginStart="@dimen/margins"
+                android:contentDescription="@string/star_forks_img" />
+
+            <TextView
+                android:id="@+id/tv_repo_forks_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:paddingStart="@dimen/left_right_padding"
+                android:paddingEnd="@dimen/left_right_padding"
+                android:text="@string/forks_text"
+                android:textAlignment="textStart"
+                android:textColor="@color/dark_grey"
+                android:textSize="@dimen/simple_text_size"
+                app:layout_constraintBottom_toBottomOf="@id/iv_star_forks"
+                app:layout_constraintStart_toEndOf="@id/iv_star_forks"
+                app:layout_constraintTop_toTopOf="@id/iv_star_forks" />
+
+            <TextView
+                android:id="@+id/tv_repo_forks_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toEndOf="@id/tv_repo_forks_text"
+                app:layout_constraintTop_toTopOf="@id/tv_repo_forks_text"
+                app:layout_constraintBottom_toBottomOf="@id/tv_repo_forks_text"
+                android:layout_marginStart="@dimen/margins"
+                android:paddingStart="@dimen/left_right_padding"
+                android:paddingEnd="@dimen/left_right_padding"
+                android:textAlignment="textStart"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/simple_text_size"
+                android:text="@string/default_text"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

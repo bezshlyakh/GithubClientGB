@@ -3,15 +3,46 @@ package com.geekbrains.githubclient.mvp.model.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
+
 public class GithubUser implements Parcelable {
-    private String mLogin;
+    @Expose String id;
+    @Expose String login;
+    @Expose String avatarUrl;
+    @Expose String reposUrl;
 
     public GithubUser(String login) {
-        mLogin = login;
+        this.login = login;
     }
 
     protected GithubUser(Parcel in) {
-        mLogin = in.readString();
+        login = in.readString();
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getReposUrl() {
+        return reposUrl;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(login);
     }
 
     public static final Creator<GithubUser> CREATOR = new Creator<GithubUser>() {
@@ -25,22 +56,4 @@ public class GithubUser implements Parcelable {
             return new GithubUser[size];
         }
     };
-
-    public String getLogin() {
-        return mLogin;
-    }
-
-    public void setLogin(String login) {
-        mLogin = login;
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeString(mLogin);
-    }
 }

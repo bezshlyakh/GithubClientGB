@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">GithubClient</string>
     <string name="default_text">default</string>
+    <string name="user_avatar_discr">user avatar</string>
+    <string name="list_of_repos">List of repos</string>
+    <string name="star_forks_img">star forks img</string>
+    <string name="forks_text">forks:</string>
 </resources>

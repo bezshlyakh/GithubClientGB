@@ -2,9 +2,8 @@ package com.geekbrains.githubclient.mvp.presenter;
 
 import android.util.Log;
 
-import com.geekbrains.githubclient.GithubApplication;
 import com.geekbrains.githubclient.mvp.model.entity.GithubUser;
-import com.geekbrains.githubclient.mvp.model.entity.GithubUserRepo;
+import com.geekbrains.githubclient.mvp.model.repo.IGithubUsersRepo;
 import com.geekbrains.githubclient.mvp.presenter.list.IUserListPresenter;
 import com.geekbrains.githubclient.mvp.view.UserItemView;
 import com.geekbrains.githubclient.mvp.view.UsersView;
@@ -13,7 +12,7 @@ import com.geekbrains.githubclient.navigation.Screens;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.disposables.Disposable;
 import moxy.MvpPresenter;
 import ru.terrakok.cicerone.Router;
@@ -23,10 +22,17 @@ public class UsersPresenter extends MvpPresenter<UsersView> {
 
     private static final boolean VERBOSE = true;
 
-    private GithubUserRepo mUsersRepo = new GithubUserRepo();
-    private Router mRouter = GithubApplication.INSTANCE.getRouter();
-    private GithubUser githubUser;
+    private final Scheduler SCHEDULER;
+    private final IGithubUsersRepo USERS_REPO;
+    private final Router ROUTER;
     private Disposable disposables;
+
+    public UsersPresenter(Scheduler scheduler, IGithubUsersRepo usersRepo, Router router) {
+        SCHEDULER = scheduler;
+        USERS_REPO = usersRepo;
+        ROUTER = router;
+    }
+
 
     private class UsersListPresenter implements IUserListPresenter {
         private List<GithubUser> mUsers = new ArrayList<>();
@@ -36,14 +42,15 @@ public class UsersPresenter extends MvpPresenter<UsersView> {
             if (VERBOSE) {
                 Log.v(TAG, " onItemClick " + view.getPos());
             }
-            githubUser = mUsers.get(view.getPos());
-            mRouter.navigateTo(new Screens.UserInfoScreen(githubUser));
+            GithubUser githubUser = mUsers.get(view.getPos());
+            ROUTER.navigateTo(new Screens.UserInfoScreen(githubUser));
         }
 
         @Override
         public void bindView(UserItemView view) {
             GithubUser user = mUsers.get(view.getPos());
             view.setLogin(user.getLogin());
+            view.loadAvatar(user.getAvatarUrl());
         }
 
         @Override
@@ -52,35 +59,31 @@ public class UsersPresenter extends MvpPresenter<UsersView> {
         }
     }
 
-    private UsersPresenter.UsersListPresenter mUserListPresenter = new UsersPresenter.UsersListPresenter();
+    private final UsersPresenter.UsersListPresenter USERS_LIST_PRESENTER = new UsersPresenter.UsersListPresenter();
 
     public IUserListPresenter getPresenter() {
-        return mUserListPresenter;
+        return USERS_LIST_PRESENTER;
     }
 
     @Override
     protected void onFirstViewAttach() {
         super.onFirstViewAttach();
-
         getViewState().init();
         loadData();
     }
 
     private void loadData() {
-        //List<GithubUser> users = mUsersRepo.getUsers();
-        //mUserListPresenter.mUsers.addAll(users);
-
-        disposables = mUsersRepo.getUsers()
-                .subscribe(
-                        (s) -> Log.i(TAG, "onNext " + mUserListPresenter.mUsers.addAll(s)),
-                        (e) -> Log.i(TAG, "onError" + e.getMessage()),
-                        () -> Log.i(TAG, "onComplete")
-                );
-        getViewState().updateList();
+        disposables = USERS_REPO.getUsers().observeOn(SCHEDULER).subscribe
+                (repos-> {
+                        USERS_LIST_PRESENTER.mUsers.clear();
+                        USERS_LIST_PRESENTER.mUsers.addAll(repos);
+                        getViewState().updateList();
+                        },
+                        (e) -> Log.w(TAG, "Error" + e.getMessage()));
     }
 
     public boolean backPressed() {
-        mRouter.backTo(new Screens.UsersScreen());
+        ROUTER.backTo(new Screens.UsersScreen());
         disposables.dispose();
         return true;
     }

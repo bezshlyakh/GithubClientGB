@@ -19,7 +19,7 @@ import ru.terrakok.cicerone.android.support.SupportAppNavigator;
 
 public class MainActivity extends MvpAppCompatActivity implements MainView {
 
-    private NavigatorHolder mNavigatorHolder = GithubApplication.INSTANCE.getNavigatorHolder();
+    private final NavigatorHolder NAVIGATOR = GithubApplication.INSTANCE.getNavigatorHolder();
     Navigator mNavigator = new SupportAppNavigator(this, getSupportFragmentManager(), R.id.container);
 
     @InjectPresenter
@@ -41,14 +41,14 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
-        mNavigatorHolder.setNavigator(mNavigator);
+        NAVIGATOR.setNavigator(mNavigator);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
 
-        mNavigatorHolder.removeNavigator();
+        NAVIGATOR.removeNavigator();
     }
 
     @Override
