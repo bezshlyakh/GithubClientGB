@@ -16,19 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.geekbrains.githubclient.GithubApplication;
 import com.geekbrains.githubclient.R;
 import com.geekbrains.githubclient.mvp.model.entity.GithubUser;
+import com.geekbrains.githubclient.mvp.model.entity.room.Database;
 import com.geekbrains.githubclient.mvp.model.repo.IGithubUserRepositories;
-import com.geekbrains.githubclient.mvp.model.repo.IGithubUsersRepo;
 import com.geekbrains.githubclient.mvp.model.repo.retrofit.RetrofitGithubUserRepositories;
-import com.geekbrains.githubclient.mvp.model.repo.retrofit.RetrofitGithubUsersRepo;
 import com.geekbrains.githubclient.mvp.presenter.UserInfoPresenter;
-import com.geekbrains.githubclient.mvp.presenter.UsersPresenter;
-import com.geekbrains.githubclient.mvp.view.RepoItemView;
 import com.geekbrains.githubclient.mvp.view.UserInfoView;
 import com.geekbrains.githubclient.mvp.view.image.GlideImageLoader;
 import com.geekbrains.githubclient.mvp.view.image.IImageLoader;
 import com.geekbrains.githubclient.ui.BackButtonListener;
 import com.geekbrains.githubclient.ui.adapter.RepoRVAdapter;
-import com.geekbrains.githubclient.ui.adapter.UserRVAdapter;
+import com.geekbrains.githubclient.ui.network.AndroidNetworkStatus;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import moxy.MvpAppCompatFragment;
@@ -50,7 +47,9 @@ public class UserInfoFragment extends MvpAppCompatFragment implements UserInfoVi
 
     @ProvidePresenter
     UserInfoPresenter provideReposPresenter() {
-        IGithubUserRepositories userRepositories = new RetrofitGithubUserRepositories((GithubApplication.INSTANCE).getApi());
+        IGithubUserRepositories userRepositories = new RetrofitGithubUserRepositories((GithubApplication.INSTANCE).getApi(),
+                new AndroidNetworkStatus(),
+                Database.getInstance());
         Router router = GithubApplication.INSTANCE.getRouter();
         return new UserInfoPresenter(AndroidSchedulers.mainThread(), userRepositories, router);
     }

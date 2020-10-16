@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.geekbrains.githubclient.GithubApplication;
 import com.geekbrains.githubclient.R;
-import com.geekbrains.githubclient.mvp.model.entity.GithubUserReposItem;
+import com.geekbrains.githubclient.mvp.model.entity.GithubUserRepository;
 import com.geekbrains.githubclient.mvp.presenter.RepoInfoPresenter;
 import com.geekbrains.githubclient.mvp.view.RepoInfoView;
 import com.geekbrains.githubclient.ui.BackButtonListener;
@@ -24,7 +24,7 @@ public class RepoInfoFragment extends MvpAppCompatFragment implements RepoInfoVi
 
     private final String TAG = "RepoInfoFragment";
     private View mView;
-    private GithubUserReposItem repo;
+    private GithubUserRepository repo;
 
     @InjectPresenter
     RepoInfoPresenter mPresenter;

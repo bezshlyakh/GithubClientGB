@@ -22,7 +22,7 @@ public class Screens {
         private final Parcelable GIT_USER;
 
         public UserInfoScreen(Parcelable user){
-            this.GIT_USER = user;
+            GIT_USER = user;
         }
 
         @Override
@@ -35,7 +35,7 @@ public class Screens {
         private final Parcelable USER_REPO;
 
         public RepoInfoScreen(Parcelable repo){
-            this.USER_REPO = repo;
+            USER_REPO = repo;
         }
 
         @Override

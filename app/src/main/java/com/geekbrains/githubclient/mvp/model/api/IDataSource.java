@@ -1,7 +1,7 @@
 package com.geekbrains.githubclient.mvp.model.api;
 
 import com.geekbrains.githubclient.mvp.model.entity.GithubUser;
-import com.geekbrains.githubclient.mvp.model.entity.GithubUserReposItem;
+import com.geekbrains.githubclient.mvp.model.entity.GithubUserRepository;
 import java.util.List;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.GET;
@@ -12,5 +12,5 @@ public interface IDataSource {
     Single<List<GithubUser>> getUsers();
 
     @GET
-    Single<List<GithubUserReposItem>> getRepos(@Url String url);
+    Single<List<GithubUserRepository>> getRepos(@Url String url);
 }

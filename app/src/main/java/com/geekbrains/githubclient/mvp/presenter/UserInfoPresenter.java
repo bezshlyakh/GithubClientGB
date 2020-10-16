@@ -3,7 +3,7 @@ package com.geekbrains.githubclient.mvp.presenter;
 import android.util.Log;
 
 import com.geekbrains.githubclient.mvp.model.entity.GithubUser;
-import com.geekbrains.githubclient.mvp.model.entity.GithubUserReposItem;
+import com.geekbrains.githubclient.mvp.model.entity.GithubUserRepository;
 import com.geekbrains.githubclient.mvp.model.repo.IGithubUserRepositories;
 import com.geekbrains.githubclient.mvp.presenter.list.IReposListPresenter;
 import com.geekbrains.githubclient.mvp.view.RepoItemView;
@@ -39,7 +39,7 @@ public class UserInfoPresenter extends MvpPresenter<UserInfoView> {
     }
 
     private class ReposListPresenter implements IReposListPresenter {
-        private List<GithubUserReposItem> mRepos = new ArrayList<>();
+        private List<GithubUserRepository> mRepos = new ArrayList<>();
 
         @Override
         public void onItemClick(RepoItemView view) {
@@ -47,13 +47,13 @@ public class UserInfoPresenter extends MvpPresenter<UserInfoView> {
                 Log.v(TAG, " onItemClick " + view.getPos());
             }
 
-            GithubUserReposItem reposItem = mRepos.get(view.getPos());
+            GithubUserRepository reposItem = mRepos.get(view.getPos());
             ROUTER.navigateTo(new Screens.RepoInfoScreen(reposItem));
         }
 
         @Override
         public void bindView(RepoItemView view) {
-            GithubUserReposItem reposItem = mRepos.get(view.getPos());
+            GithubUserRepository reposItem = mRepos.get(view.getPos());
             view.setRepoName(reposItem.getName());
         }
 
@@ -77,7 +77,7 @@ public class UserInfoPresenter extends MvpPresenter<UserInfoView> {
     }
 
     private void loadData() {
-        Disposable disposables = USER_REPOSITORIES.getRepos(gitUser.getReposUrl()).observeOn(SCHEDULER).subscribe
+        Disposable disposables = USER_REPOSITORIES.getRepos(gitUser.getReposUrl(), gitUser.getId()).observeOn(SCHEDULER).subscribe
                 (repos -> {
                             REPOS_LIST_PRESENTER.mRepos.clear();
                             REPOS_LIST_PRESENTER.mRepos.addAll(repos);

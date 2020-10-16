@@ -6,17 +6,36 @@ import android.os.Parcelable;
 import com.google.gson.annotations.Expose;
 
 public class GithubUser implements Parcelable {
-    @Expose String id;
+    @Expose String id; //todo long
     @Expose String login;
     @Expose String avatarUrl;
     @Expose String reposUrl;
 
-    public GithubUser(String login) {
+    public GithubUser(String id, String login, String avatarUrl, String reposUrl) {
+        this.id = id;
         this.login = login;
+        this.avatarUrl = avatarUrl;
+        this.reposUrl = reposUrl;
     }
 
     protected GithubUser(Parcel in) {
         login = in.readString();
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public void setReposUrl(String reposUrl) {
+        this.reposUrl = reposUrl;
     }
 
     public String getLogin() {
@@ -34,6 +53,8 @@ public class GithubUser implements Parcelable {
     public String getReposUrl() {
         return reposUrl;
     }
+
+
 
     @Override
     public int describeContents() {

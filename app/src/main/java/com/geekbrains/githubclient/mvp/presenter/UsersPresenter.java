@@ -33,7 +33,6 @@ public class UsersPresenter extends MvpPresenter<UsersView> {
         ROUTER = router;
     }
 
-
     private class UsersListPresenter implements IUserListPresenter {
         private List<GithubUser> mUsers = new ArrayList<>();
 
